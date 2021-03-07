@@ -1,0 +1,1075 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Elementi Citati</title>
+<style type="text/css">
+body {
+	background-image: url(../Immagini/Sfondo.png);
+	background-repeat: repeat-x;
+}
+.cerca{
+	position : relative;
+	width : 375px;
+	margin-left : 290px;
+	font-size : 18px;
+}
+a { text-decoration:none; border: 0px; }
+a:link { border: 0px; }
+a:visited { border: 0px; }
+a:hover{ border: 0px; }
+img{ border:none;}
+.titolo_indice{
+	color: #900;
+	font-size: 30px;
+	font: bold;
+}
+
+.legend{
+	position: fixed;
+	width: 50%;
+	height: 85%;
+	top:5%;
+	right: 3%;
+	background-color: #555555;
+	border-radius: 5px;
+	opacity: 0.8;
+	color: #FFFFFF;
+	padding: 15px;
+	display: none;
+	overflow: auto;
+}
+
+.legend_table{
+	position: relative;
+	width: 100%;
+	text-align: left;
+	background-color: #555555;
+}
+
+.legend_table td{
+	text-align: left;
+}
+.close_button{
+	position: fixed;
+	top:5%;
+	right: 3%;
+	margin-top: -15px;
+	margin-right:-15px;
+}
+
+</style>
+<script>
+	function showAll(){
+		var indextable = document.getElementById("indice");
+		var index = indextable.getElementsByTagName("p");
+		for(i = 0 ; i < index.length ; i++){
+				index[i].style.display = '';
+		}
+	}
+	
+	function hideAll(){
+		var indextable = document.getElementById("indice");
+		var index = indextable.getElementsByTagName("p");
+		for(i = 0 ; i < index.length ; i++){
+				index[i].style.display = 'none';
+		}
+	}	
+	
+	function indexShow(){
+		var txt = document.getElementById("testo").value.toLowerCase();
+		var indextable = document.getElementById("indice");
+		var index = indextable.getElementsByTagName("p");
+		if (txt != ""){
+			var indextitle;
+			for(i = 0 ; i < index.length ; i++){
+				if (index[i].className == 'titolo_indice') {
+					index[i].style.display = 'none';
+					indextitle = index[i];
+				}else{
+					var trunk = index[i].innerHTML.toLowerCase();
+					trunk = trunk.substring(0,trunk.search(":"));
+					if (trunk.search(txt) == -1){
+						index[i].style.display = 'none';
+					}else{
+						index[i].style.display = '';
+						indextitle.style.display = '';
+					}
+				}
+			}
+		}else{
+			for(i = 0 ; i < index.length ; i++){
+				index[i].style.display = '';
+			}
+		}
+		document.getElementById("testo").value = "";
+	}
+	
+	function indexShowadvance(){
+		var txt = document.getElementById("testo").value.toLowerCase();
+		txt = txt.substring(0,txt.length-1);
+		var indextable = document.getElementById("indice");
+		var index = indextable.getElementsByTagName("p");
+		if (txt != ""){
+			for(i = 0 ; i < index.length ; i++){
+				if (index[i].className == 'titolo_indice') {
+					index[i].style.display = 'none';
+					indextitle = index[i];
+				}else{
+					var trunk = index[i].innerHTML.toLowerCase();
+					trunk = trunk.substring(0,trunk.search(":"));
+					if (trunk.search(txt) == -1){
+						index[i].style.display = 'none';
+					}else{
+						index[i].style.display = '';
+						indextitle.style.display = '';
+					}
+				}
+			}
+		}else{
+			for(i = 0 ; i < index.length ; i++){
+				index[i].style.display = '';
+			}
+		}
+		document.getElementById("testo").value = "";
+	}
+	
+	function indexShowEndAdvance(){
+		var txt = document.getElementById("testo").value.toLowerCase();
+		txt = txt.substring(1,txt.length);
+		var indextable = document.getElementById("indice");
+		var index = indextable.getElementsByTagName("p");
+		var len = txt.length;
+		if (txt != ""){
+			for(i = 0 ; i < index.length ; i++){
+				if (index[i].className == 'titolo_indice') {
+					index[i].style.display = 'none';
+					indextitle = index[i];
+				}else{
+					var trunk = index[i].innerHTML.toLowerCase();
+					trunk = trunk.substring(0,trunk.search(":"));
+					if (trunk.search(txt) == -1){
+						index[i].style.display = 'none';
+					}else{
+						index[i].style.display = '';
+						indextitle.style.display = '';
+					}
+				}
+			}
+		}else{
+			for(i = 0 ; i < index.length ; i++){
+				index[i].style.display = '';
+			}
+		}
+		document.getElementById("testo").value = "";
+	}
+	
+	
+	
+	function dispatch(){
+
+		var txt = document.getElementById("testo").value.toLowerCase();
+		var end = /[?]$/; // che finisce con '?'
+		var start = /^[?]/; // che inizia con '?'
+		var middle = /[?]/; // che contiene '?'
+		if (end.test(txt))
+		{
+			indexShowadvance();
+		}
+		if (start.test(txt))
+		{
+			indexShowEndAdvance();
+		}
+		if (!end.test(txt) & !start.test(txt) & !middle.test(txt))
+		{
+			indexShow();
+		}
+	}
+	
+	function help(){
+		 var helper = document.createElement('div');
+		 helper.id = 'helper';
+		 helper.style.width = '300px';
+		 helper.style.height = '100px';
+		 helper.style.position = 'absolute';
+		 helper.style.top = (tempY) + 'px';
+		 helper.style.left = (tempX-300) + 'px';
+		 helper.style.backgroundColor = '#1E90FF';
+		 helper.style.border = 'double';
+		 helper.style.paddingLeft = '10px';
+		 helper.style.paddingTop = '10px';
+		 helper.style.textAlign = 'left';
+		 helper.innerHTML = 'Come si cerca:<br/>\?testo : Trova le parole che iniziano con \'testo\'<br/>testo? : Trova le parole che finiscono con \'testo\'<br/>testo : Trova le parole che contengono \'testo\'';
+		 document.body.appendChild(helper);
+	}
+	
+	function hideHelp(){
+		var olddiv = document.getElementById('helper');
+  		document.body.removeChild(olddiv);
+	}
+	
+	var IE = document.all?true:false
+	// If NS -- that is, !IE -- then set up for mouse capture
+	if (!IE) document.captureEvents(Event.MOUSEMOVE)
+	// Set-up to use getMouseXY function onMouseMove
+	document.onmousemove = getMouseXY;
+	var tempX = 0;
+	var tempY = 0;
+	
+	function getMouseXY(e) {
+	  if (IE) { // grab the x-y pos.s if browser is IE
+		tempX = event.clientX + document.body.scrollLeft
+		tempY = event.clientY + document.body.scrollTop
+	  } else {  // grab the x-y pos.s if browser is NS
+		tempX = e.pageX
+		tempY = e.pageY
+	  }  
+	  // catch possible negative values in NS4
+	  if (tempX < 0){tempX = 0}
+	  if (tempY < 0){tempY = 0}  
+	  return true
+	}
+</script>
+</head>
+
+<body>
+
+    <div style="width:640px; margin-left:auto; margin-right:auto">
+
+<div style="margin-left: auto; margin-right:auto; width:664px">
+<img src="../Immagini/StrisciaElementiCitati.png" width="664" height="140"/>	
+</div>
+<div style="margin-left: auto; margin-right:auto; width:664px; margin-top: 10px">
+<a href="../Index.html"><img src="../Immagini/bottoneHome.png" width="87" height="40" /></a>
+<a href="../Pagine/PaginaEdizioniEnaudi.html" style="margin-left:24px;"><img src="../Immagini/bottoneEdizioniEnaudi.png" width="87" height="40"/></a>
+<a href="../Pagine/PaginaEdizioniCritiche.html" style="margin-left:24px"><img src="../Immagini/bottoneEdizioniCritiche.png" width="87" height="40" /></a>
+<a href="../Pagine/PaginaComparazioni.html" style="margin-left:24px"><img src="../Immagini/bottoneComparazioni.png" width="87" height="40" /></a>
+<a href="../Pagine/PaginaOnomastico.html" style="margin-left:24px"><img src="../Immagini/bottoneOnomastico.png" width="87" height="40" /></a>
+<a href="../Pagine/PaginaCitati.html" style="margin-left:24px"><img src="../Immagini/bottoneCitati.png" width="87" height="40" /></a>
+</div>
+</div>
+    
+    <div style="width:640px; margin-left:auto; margin-right:auto">
+    	<form class="cerca" onsubmit="return false;" >
+			<label>Cerca
+				<input type="text" id="testo" value="" onKeydown="Javascript: if (event.keyCode==13){ dispatch(); return false; }" />
+				<input type="button" value="Cerca"  onclick="dispatch()"/>
+				<input type="button" value="Mostra" onclick="showAll()"/>
+				<input type="button" value="Siglario" onclick="document.getElementById('legend').style.display = 'block';"/>
+                <label onmouseover="help()" onmouseout="hideHelp()">?</label>
+			</label>
+		</form>
+	</div>
+    <hr>
+    
+    <div id="indice" class="indice">
+<p class="titolo_indice">Personaggi:</p>
+<p>Canova Antonio: [PJ] 563(1);</p>
+<p>Cleopatra: [PdB] 364(1);</p>
+<p>Coldstream Guards (guardie a piedi di sua maestà): [PJ] 599(1); | [UrPj] 253(1); [Pj1] 574(1);</p>
+<p>Cromwell Oliver: [PJ] 571(1);| [Pj1] 541(1);</p>
+<p>Eden Anthony (politico britannico): [PdB1] 1283(2);[Uqp1] 1794(1);</p>
+<p>Federico il Grande: [Im] 990(2); | [Fra] 1684(2);[PdB1] 1306(1);</p>
+<p>Fiorello La Guardia: [PJ] 433(1); | [Pj1] 395(1);</p>
+<p>Garibaldi Giuseppe: [Uqp] 1073(1); 1078(1); | [Uqp3] 1988(1); 1993(1);</p>
+<p>Gentile Giovanni: [c] [PjC10]</p>
+<p>Giolitti Giovanni: [PdB] 311(1);| [PdB1] 1345(1);[PdB2] 1453(1);</p>
+<p>Giovanna d'Arco: [UrPj] 249(1);</p>
+<p>Giulio Cesare: [PdB] 343(1); | [PdB2] 1486(1);</p>
+<p>Guisa (Enrico II di Guisa): [Pj1] 401(1);</p>
+<p>Hicsos / Hicksos (etnia del basso egitto): [PJ] 596(1);| [Pj1] 569(1);[Pj2] 957(1);</p>
+<p>Lenin Vladimir: [PJ] 445(1);| [Pj1] 407(1);</p>
+<p>Leonida: [Im] 946(1);</p>
+<p>Lloyd's: [PdB1] 1308(1);</p>
+<p>Matteotti Giacomo: [PJ] 471(1);| [UrPj] 45(1); 171(1);[Pj1] 434(1);</p>
+<p>Napoleone: [PdB1] 1306(1);</p>
+<p>Nenni Pietro: [Ar] 1383(2); [14-oldlion]</p>
+<p>Parti: [Ep] 38(1);</p>
+<p>Quinto Fabio Massimo il Temporeggiatore: [Fra] 1624(1);</p>
+<p>Re Carlo: [PJ] 570(1);| [UrPj] 37(1); 51(1);</p>
+<p>Regina Elisabetta: [UrPj] 51(1);</p>
+<p>Regina Guglielmina: [UrPj] 187(1);</p>
+<p>Rosa Salvador (pittore e incisore barocco): [PJ] 518(1); | [Pj1] 484(1);</p>
+<p>Sant'Elia (Architetto che ha progettato Firenze S.M.N.): [PdB] 389(1);| [PdB1] 1419(1);</p>
+<p>Saragat Giuseppe: [Ar] 1383(1);[14-oldlion] </p>
+<p>Silvani Gherardo (architetto): [Pj1] 570(1);</p>
+<p>Silvio Pellico: [Pj1] 394(1);</p>
+<p>Sir Drake Francis: [Pj1] 800(1); [Pj2] 1122(1);</p>
+<p>Stalin Joseph: [PJ] 518(1);| [UrPj] 253(1);[Pj1] 484(1);</p>
+<p>Taitù Batùl (regina di Etiopia): [Ma] 166(1);</p>
+<p>Teutoni: [Ep] 110(1);</p>
+<p>Trace/i (popolo): [PdB1] 1351(1);[Pj1] 907(1);</p>
+<p>Voce dell'America: [Pj1] 395(3); 426(1);</p>
+<p>Voce di Londra: [AP] 1424(1);</p>
+<p>Von Konrad: [Pj1] 497(1);</p>
+<p>Zio Sam: [UrPj] 195(1);</p>
+
+<p class="titolo_indice">Autori e personaggi letterari:</p>
+<p>Ajace: [Ep] 101(1);</p>
+<p>Arlen Michael [Uqp] 1028(1): | [Uqp2] 1826(1);[Uqp3] 1841(1);</p>
+<p>Artù, re: [PdB] 327(1); |PdB2| 1470(1);</p>
+<p>Bacon Francis: [UrPj] 51(1);</p>
+<p>Barrie J.M. (autore): [UrPj] 41(1);</p>
+<p>Baudelaire Charles: [PdB1] 1268(1);[Pj1] 406(1); 902(1); [Pj2] 1187(1);| [PJ] 847(1);</p>
+<p>Bedivere, Sir: [PdB] 327(1); [Ar] 1334(1);[8-affare] | [PdB1] 1361(1); [PdB2] 1470(1);</p>
+<p>Bergson Henri-Louis: [PdB] 346(2);| [PdB1] 1309(2); [PdB2] 1489(2);</p>
+<p>Browning Robert: [PdB] 344(1);</p>
+<p>Brummel Beau: [UrPj] 299(1);</p>
+<p>Bunyan John: [PJ] 758(1);| [Pj1] 763(1);[Pj2] 1091(1);</p>
+<p>Candidus: [PJ] 431(1);</p>
+<p>D'Annunzio Gabriele: [PdB] 344(2);[PJ] 444(1);| [PdB1] 1307(2);[PdB2] 1487(2);[Pj1] 406(1);</p>
+<p>Dante Alighieri: [PJ] 519(1);| [UrPj] 307(1);[Pj1] 485(1);</p>
+<p>Dr. Jekill: [Pj1] 603(1);</p>
+<p>Dreiser Theodore: [UrPj] 301(1);</p>
+<p>Einaudi Giulio: [Ar] 1379(1); [14-oldlion]</p>
+<p>Ellington Duke: [PdB] 296(1); | [PdB1] 1334(1);</p>
+<p>Faulkner William Cuthbert: [PdB1] 1277(1);</p>
+<p>Guido da Verona: [PdB] 332(1); | [PdB1] 1365(1);</p>
+<p>Hardy Thomas: [UrPj] 301(1);</p>
+<p>Hook: [UrPj] 41(1);</p>
+<p>Hugo Victor: [PJ] 463(1); | [Pj1] 326(1); 426(1);</p>
+<p>Kierkegaard Søren Aabye: [PJ] 445(3);| [Pj1] 407(1); 408(3);</p>
+<p>Kormendi Ferenc (scrittore ungherese): [PdB1] 1266(1); [Pj1] 652(1);</p>
+<p>Lauder Henry, Sir: [Fra] 1633(1);</p>
+<p>Lillipuziana: [UrPj] 39(1); 365(2);</p>
+<p>Lord Sparkenbroke Charles Morgan: [PdB1] 1266(1);</p>
+<p>Machiavelli Niccolò: [PJ] 438(1); | [Pj1] 401(1);</p>
+<p>Malory Thomas: [PJ] 884(1);| [Pj1] 570(1); 885(1);[Pj2] 1172(1);</p>
+<p>Marlowe Chris: [PJ] 430(1); 438(1); 472(1);[Im] 883(1);| [PdB1] 1278(1);[Fra] 1588(1);[Uqp1] 1796(1); 1798(1);</p>
+<p>Milady Winter (Tre moschettieri): [UrPj] 227(1);</p>
+<p>Milton John: [UrPj] 51(1);</p>
+<p>Morgan Charles (autore): [PdB1] 1265(1);</p>
+<p>Moro di Venezia: [Ar] 1242(1);[4-esattore]; [Ar] 1404(1);[16-Boeri]</p>
+<p>Mr. Hyde: [Pj1] 603(1);</p>
+<p>Mura (Maria Assunta Giulia Volpi Nannipieri): [Pj1] 652(3);</p>
+<p>Nemo: [PJ] 460(1);| [Pj1] 423(1);</p>
+<p>Omero: [PdB] 344(1);| [PdB1] 1307(1);[PdB2] 1487(1);</p>
+<p>Oriani Alfredo (storico e scrittore): [PdB] 344(2);| [PdB1] 1307(1); [PdB2] 1487(2);[Pj1] 902(1);[Pj2] 1187(1);</p>
+<p>Piers Tenniels: [PdB1] 1266(1);</p>
+<p>Poe Edgar Allan: [Uqp] 1029(1);| [PdB1] 1268(3);[UrPj] 63(1);[Uqp2] 1841(1);[Uqp3] 1841(1);</p>
+<p>Polibio: [PdB1] 1306(1);</p>
+<p>Properzio: [PJ] 834(1);| [Pj1] 885(1);[Pj2] 1172(1);</p>
+<p>Proust Marcel: [Uqp] 1028(1);| [Uqp2] 1826(1);[Uqp3] 1841(1);</p>
+<p>Re Artù: [Ar] 1334(1); [8-affare] | [PdB1] 1334(1);[PdB2] 1470(1);</p>
+<p>Robin Hood: [PJ] 448(4);[Im] 900(1); | [Pj1] 410(1); 411(3);[Fra] 1607(1);</p>
+<p>Rossetti Christina (poetessa inglese): [UrPj] 161(2);</p>
+<p>Schnitzler Arthur: [Uqp] 1028(1);| [PdB1] 1273(1); [Uqp3] 1841(1);[Uqp2] 1826(1);</p>
+<p>Svevo Italo: [PdB1] 1273(1);</p>
+<p>Synge John Millington: [PJ] 557(1);| [Pj1] 526(1);</p>
+<p>Von Konrad: [PJ] 530(1);</p>
+<p>Woodhouse P. G.: [PJ] 564(1);| [Pj1] 534(1);</p>
+<p>Yeats William Butler: [Uqp] 1045(1);| [Uqp2] 1838(1);[Uqp3] 1958(1);</p>
+
+<p class="titolo_indice">Giornali:</p>
+<p>Argosy (rivista): [UrPj] 105(2);</p>
+<p>Gazzetta del Popolo: [GF] 216(1);[1-giorno]</p>
+<p>Giornale del Fronte: [UrPj] 349(1);</p>
+<p>Le Rire (rivista): [PdB] 346(1);| [PdB1] 1309(1);[PdB2] 1489(1);</p>
+<p>Punch (fumetti): [PJ] 580(1);| [Pj1] 552(1);</p>
+
+<p class="titolo_indice">Libri e poesie:</p>
+<p>Albertine disparue (La Fugitive o Albertine disparue - Proust): [Uqp] 1028(1);| [Uqp2] 1826(1); [Uqp3] 1841(1);</p>
+<p>Commedia (Dante): [UrPj] 51(1);</p>
+<p>Dottor Faust (Marlowe): [Uqp1] 1796(1);</p>
+<p>Dr. Jekill e Mr. Hyde (Stevenson): [PJ] 626(1);| [Pj1] 603(1);</p>
+<p>Edoardo Secondo (Marlowe): [Uqp1] 1797(1);</p>
+<p>Evelyn Hope (Browning): [Uqp] 1028(2);| [Uqp2] 1841(1);[Uqp3] 1841(2); </p>
+<p>Fedone (Platone): [PJ] 444(1);| [Pj1] 406(1);</p>
+<p>I Miserabili (Hugo): [PJ] 463(1);</p>
+<p>II cappello verde (Arlen): [Uqp] 1028(1);| [Uqp3] 1841(1);</p>
+<p>Incontrarsi e dirsi addio (Kormendi): [Pj1] 652(1);</p>
+<p>L'amante di Lady Chatterley (Lawrence): [UrPj] 247(1);</p>
+<p>L'Ebreo di Malta (Marlowe): [Im] 883(1);| [Fra] 1588(1);[Uqp1] 1797(1);</p>
+<p>La Casa di Usher (Poe): [PdB1] 1268(1);</p>
+<p>La signorina Elsa (Schnitzler): [Uqp2] 1826(1);[Uqp3] 1841(1);</p>
+<p>Morella: (Poe) [Uqp2] 1843(1); [Uqp3] 1841(1);</p>
+<p>Pilgrim's Progress (Bunyan): [PJ] 430(1);| [Pj1] 392(1);</p>
+<p>Playboy del Western World (Synge): [PJ] 557(1);| [Pj1] 526(1);</p>
+<p>Tess dei d'Urbevilles  (Hardy): [Uqp] 1036(1);| [Uqp3] 1948(1); [Uqp2] 1831(1);</p>
+<p>Tragedia del Ricco Ebreo di Malta (Marlowe): [PJ] 438(1); | [Pj1] 401(1);</p>
+<p>Where you are old and gray and full of sleep (poesia di Yeats): [Uqp2] [Uqp3]</p>
+
+<p class="titolo_indice">Armi e veicoli da guerra:</p>
+<p>509 (mitragliatore): [Pj1] 425(1);</p>
+<p>Bazooka: [UrPj] 185(1);</p>
+<p>Beretta (arma): [Ar] 1345(1);[12-scambio] | [Fra] 1641(1); 1642(1);[Pj1] 547(1);[Uqp1] 1813(1);[Uqp3] 2034(1);</p>
+<p>Breda (mitragliatrice): [PdB] 314(1); 315(1); 401(1); 409(1); 416(1); 420(1);[PJ] 582(1); 583(1); 586(2); 587(2); 666(1);[AP] 1420(2); 1421(1);| [PdB1] 1349(1);[PdB2] 1458(1); 1547(1); 1556(1);[Pj1] 558(2);[Pj2] 949(1); 950(2); 955(1);</p>
+<p>Breda 38 (mitragliatore): [UrPj] 307(1);</p>
+<p>Bren (mitragliatore): [UrPj] 117(1); 121(2); 123(1); 133(1); 323(1); 335(1);[Pj1] 627(1); 753(2); 810(2); 811(1); 910(1); 914(1); 916(1); 920(1); 922(1); 923(2); 924(1);[Pj2] 978(1); 1082(1); 1083(2); 1195(1); 1197(1); 1201(1); 1202(1); 1203(1);[Fra] 1650(1); 1651(2); 1700(1);[Uqp1] 1776(1);[Uqp2] 1858(2); [Uqp3] 1981(1);</p>
+<p>Browning (arma): [PJ] 430(1);[AP] 1419(3); 1420(2); 1427(1);[Im] 905(1);| [PdB2] 1487(1);[Pj1] 392(1);[Pj2] 1029(1); 1035(2); 1039(1);[Fra] 1613(1);[Uqp2] 1905(1);</p>
+<p>Buffalo (mitragliatore): [Pj1] 568(1); 695(2); 699(1); 700(1); 702(1); 705(1); 719(1);[Pj2] 979(1); 983(1); 995(1);1033(1); 1036(1);</p>
+<p>Buffalo 8 (mitragliatrice): [PJ] 595(1); | [Pj1] 568(1);</p>
+<p>Calibro 12 (arma): [PdB2] 1544(1); [Fra] 1634(1);</p>
+<p>Caproni (aerei): [PdB] 329(1);| [PdB1] 1362(1);</p>
+<p>Carabina (arma): [Im] 916(1); 917(1);| [Fra] 1584(1); 1617(1); 1618(1); 1626(1);[Uqp1] 1731(1); 1734(1);[Uqp2] 1890(1); 1891(1); 1896(1);</p>
+<p>Carabina americana: [Uqp] 1073(1): 1074(1);</p>
+<p>Chicago (mitragliatrice): [UrPj] 113(1); 115(1); 117(3); 121(1); 145(1); 147(1); 151(1); 153(2);</p>
+<p>Cicogna (Fieseler Fi 156 "Storch" (Cicogna in lingua tedesca) aereo): [PdB] 369(3);| [PdB1] 1398(1); 1399(2);</p>
+<p>Colt (arma): [Im] 893(2); 896(1); 903(1); 924(1); 937(2); 1012(1); 1016(1); 1018(1);[Uqp] 1074(2); 1085(1); 1099(1); 1100(1); 1109(2); 1111(1); 1114(1);| [Fra] 1599(1); 1600(1); 1603(1); 1610(1); 1634(1); 1641(2); 1693(1); 1708(1); 1712(1); 1714(1);[UrPj] 7(1); 311(1);[Uqp1] 1731(1);[Uqp2] 1891(1); 1900(1); 1903(1); 1908(1); 1920(1); 1930(1);</p>
+<p>Colt 45 (arma): [PJ] 599(1);| [Pj1] 573(1); [Pj2] 959(1);</p>
+<p>Dyke (arma): [Pj1] 658(1);</p>
+<p>Enfield (fucile di ordinanza fanteria britannica): [Pj1] 553(1); 630(1);</p>
+<p>Exeter (incrociatore inglese): [PdB] 348(1);| [PdB1] 1311(1);[PdB2] 1491(1);</p>
+<p>Gabilondo (pistola semiautomatica): [Pj1] 630(3);</p>
+<p>Graf von Spee (corazzata tedesca): [PdB] 346(2); 347(1);| [PdB1] 1309(1); 1310(1);[PdB2] 1489(2); 1490(1);</p>
+<p>Grim jeer (arma): [PJ]713(1); | [Pj1] 711(1);</p>
+<p>Hurricane (caccia inglese): [Im] 867(1);| [Fra]1571(1);</p>
+<p>Junkers (bombardieri tedeschi): [UrPj]245(1);</p>
+<p>LADY REB (è scritto sulla fondina della colt 45): [Ar]1371(1); [13-Golia] | [Pj1]599(1); [Pj2]959(1);</p>
+<p>Llama (arma): [Uqp] 1074(1);| [Uqp2] 1891(1);[Uqp3]1989(1);</p>
+<p>Makallé (nome che danno a dei fucili che definiscono ironicamente appartenenti all’impresa in Africa): [UrPj]215(1); 315(1);</p>
+<p>Marlin (arma): [UrPj]7(1);</p>
+<p>Mas (arma da polizia francese): [PJ] 586(1); 587(1); 718(1); 719(1); 772(1); 773(1); 826(1); 863(1);[AP] 1420(1); 1421(1); 1452(1); 1453(1); 1454(1); 1455(1); 1468(1); 1469(1);| [Pj1] 481(1); 558(1); 717(1); 912(1); 920(1);[Pj2] 950(1); 960(1); 996(1); 1050(1); 1107(1); 1146(1); 1202(1);</p>
+<p>Moschetto: [PdB1] 1330(1); 1331(1); 1340(1); 1385(1); 1391(1); 1400(1);[Pj1] 411(1); 439(1); 467(1); 468(2); 472(1); 479(1); 483(1); 490(1); 520(1); 537(1); 556(1); 568(1); 693(1); 698(1); 707(1); 789(1); 830(1);[Pj2] 941(1); 948(1); 949(1); 957(2); 1032(1); 1040(1); 1041(1); 1114(1); [Uqp1] 1722(1); 1747(1); 1748(1); 1774(1);</p>
+<p>Moschetto da carabiniere: [Pj1] 468(1);</p>
+<p>P38 (arma): [PJ] 534(1); 850(1);| [Pj1] 502(1);[Pj2] 931(1); 1190(1);</p>
+<p>Panzer: [Pj1] 396(1);</p>
+<p>Parabellum Skoda (mitra): [Pj1] 508(1);</p>
+<p>Pistolino calibro 6.75 (arma): [Fra] 1599(1);</p>
+<p>Remington (arma): [PJ] 652(1);[Im] 868(1);| [Pj2] 980(1);</p>
+<p>RO Tre (autocarro della Lancia): [UrPj] 147(1);</p>
+<p>Saint-Etienne (mitragliatrice francese): [Im] 906(1); 907(1);[Uqp] 1088(1); 1089(1);|[Fra] 1613(1);[Uqp2] 1905(1); [Uqp3] 2004(1);</p>
+<p>Sipe (arma): [Im] 1012(1);</p>
+<p>Skoda (mitragliatore): [PJ] 540(1); 541(1); 554(1);| [Pj2] 944(1);</p>
+<p>Spa (Fiat - Blindato): [PdB1] 1379(1);[PdB2] 1492(1);</p>
+<p>Sten (arma): [PJ] 490(1), 491(1), 518(1), 519(1), 576(1), 577(1), 580(1), 581(1), 604(1), 605(1), 606(1), 607(1), 616(1), 617(1), 638(1), 639(1), 652(1), 653(1), 684(1), 685(1), 744(1), 745(1), 760(1), 761(1), 772(1), 773(1), 780(1), 781(1), 782(1), 783(1), 792(1), 793(1), 808(2), 809(2), 810(1), 811(1), 840(1), 841(1), 848(1), 849(1), 850(1), 851(1), 860(1), 861(1), 862(1), 863(1)[AP] 1416(1), 1417(1), 1420(1), 1421(1), 1438(1), 1439(1), 1442(1), 1443(1)[Im] 1000(1), 1001(1), 912(1), 913(1), 940(1), 941(1), 954(1), 955(1);[Uqp] 1026(1), 1027(1), 1056(1), 1057(1), 1058(1), 1059(1), 1072(1), 1073(1) | [Pj1]485(1), 547(1), 553(1), 578(1), 579(1), 582(1), 591(1), 592(1), 616(1), 630(1), 745(1), 746(1), 766(1), 767(1), 781(1), 795(1), 806(1), 828(1), 830(2), 846(1), 864(1), 867(1), 870(1), 893(1), 903(2), 904(1), 922(1), 924(1) [Pj2] 1014(1), 1096(1), 1108(1), 1116(1), 1118(1), 1127(1), 1145(1), 1147(2), 1188(1), 1190(1), 1202(1), 962(1)[Fra] 1620(1), 1644(1)[Uqp1]  1731(1), 1768(1)[Uqp2]  1826(1), 1827(1), 1850(1), 1891(2) [Uqp3] 1838(1), 1971(1), 1973(1), 1988(1), 1989(1);</p>
+<p>Stokes (mortaio): [PJ] 632(1);[Im] 871(1);| [Pj1] 610(1);[Pj2] 970(1);[Fra] 1576(1);</p>
+<p>Stukas: [PdB] 345(1);| [PdB1] 1308(1);[PdB2] 1488(1);</p>
+<p>Thompson (arma): [PJ] 650(1); 651(1);[Im] 902(1); 903(1); [Uqp] 1074(1);[Ar] 1200(1); 1201(1); 1210(1); 1211(1);[1-SanBenedetto] | [UrPj] 357(1);[Pj1] 627(1); 694(1);[Pj2] 978(1);[Fra] 1610(1); 1632(1);[Uqp3] 1989(1);</p>
+<p>Tigre (Panzer IV Tiger carro armato tedesco): [PdB1] 1409(1);</p>
+<p>U-boote: [PdB] 345(1);| [PdB2] 1488(1);</p>
+<p>Wellington Vickers (bombardiere bimotore inglese): [UrPj] 87(1);</p>
+<p>Winchester (arma): [Fra] 1621(1); [Uqp2] 1833(1);</p>
+
+<p>Sigarette:</p>
+<p>Ambrosiana (sigarette italiane): [PJ] 607(2);| [Pj1] 583(2); [Uqp1] 1756(1); [Uqp2] 1878(1);</p>
+<p>Capstan (sigarette inglesi): [PJ] 657(1); | [UrPj] 19(1); 165(1); 189(1);[Pj1] 635(1);[Pj2] 971(1); 984(1);</p>
+<p>Craven (sigarette inglesi): [Im] 867(1); 892(1); 893(1); 994(1); 995(1); [Pj] 652(1); 653(1); [Uqp] 1072(1); 1073(1); | [UrPj] 9(1); 23(1); 41(1); 67(1); 69(1); 107(1); 143(1); 165(1); [Pj1] 670(1); [Pj2] 980(1);[Fra] 1599(1); 1690(1);[Uqp1] 1774(1);[Uqp2] 1890(1); [Uqp3] 1988(1); 1989(1);</p>
+<p>Craven A (sigarette inglesi): [PJ] 653(1);[Uqp] 1073(1); | [Pj1] 670(1);[Pj2] 980(1);[Uqp3] 1988(1);</p>
+<p>Empress State (sigarette): [UrPj] 105(1); </p>
+<p>Melarchino (sigarette egiziane): [UrPj] 9(1);</p>
+<p>Milit (sigarette): [PdB1] 1405(1);[PdB2] 1520(1); 1549(1);</p>
+<p>Navycut (sigarette inglesi): [Im] 917(1); | [Fra] 1627(1);[Pj1] 611(1);</p>
+<p>Nazionali (sigarette italiane): [PJ] 607(1);[AP] 1424(1);| [Pj1] 583(1); 678(1); 907(1);</p>
+<p>Popolari (sigarette italiane): [AP] 1412(1); 1486(1); [Ar] 1322(1);[9-premilitari] | [PdB1] 1291(1); 1355(1);</p>
+<p>R 6 (sigarette tedesche): [Pj2] 1085(1);</p>
+<p>R. C. (sigarette): [Pj1] 464(1);</p>
+<p>Serraglio (sigarette): [AP] 1438(1);</p>
+<p>State Empress (sigarette): [UrPj] 113(1);</p>
+
+<p class="titolo_indice">Attori, registi e film:</p>
+<p>Boles John (attore): [PdB1] 1326(1); </p>
+<p>Calamai Clara (attrice): [PdB] 299(1);| [PdB1] 1337(1);[PdB2] 1440(1);</p>
+<p>Carradine John (attore americano): [Pj1] 485(1);</p>
+<p>Crawford Joan (attrice): [PdB1] 1302(1);</p>
+<p>Drake: [PJ] 787(1);</p>
+<p>Durbin Deana (attrice): [UrPj] 83(1);</p>
+<p>Falkenburg Jinx (attrice): [Im] 925(2);| [UrPj] 85(1);</p>
+<p>Flamant Georges (attore): [PJ] 449(2);| [Pj1] 412(2);</p>
+<p>La Venere cieca (film): [PJ] 449(1);[Uqp] 1122(1);| [Pj1] 411(1);[Uqp3] 2041(1);</p>
+<p>Macario Erminio (attore e comico): [Uqp] 1068(1);| [Uqp2] 1861(1);[Uqp3] 1984(1);</p>
+<p>Matthews Jesse (attrice): [Im] 925(1);| [UrPj] 83(1); [Fra] 1635(1);</p>
+<p>Minx Falkenburg (attrice): [Fra] 1635(1);</p>
+<p>Valenti Osvaldo (attore): [PJ] 489(1);| [Pj1] 454(1);</p>
+<p>Ridolini (Larry Semon): [PJ] 435(1); | [Pj1] 397(1);</p>
+<p>Romance Viviana (attrice francese): [PJ] 449(2);[Uqp] 1122(1);| [Pj1] 411(1);[Uqp1] 1812(1); [Uqp3] 2040(1); 2041(1);</p>
+<p>Sfida infernale: [VA] [7-Ettore] 98(2); </p>
+<p>Totò: [PdB] 298(1);[PJ] 488(1); [Uqp] 1068(1); 1069(1);| [PdB1] 1336(1);[Uqp2] 1861(1);[Uqp3] 1984(1); 1985(1);</p>
+<p>Valentino Rodolfo: [PdB1] 1273(1);</p>
+<p>Velez Lupe (attrice): [Im] 925(1); | [Fra] 1635(1);[UrPj] 83(1);</p>
+
+<p class="titolo_indice">Musicisti e compositori:</p>
+<p>Barzizza Pippo (musicista): [PdB1] 1278(1);</p>
+<p>Chopin Fryderyk Franciszek: [PJ] 564(1); | [Pj1] 534(1);</p>
+<p>Ciaikovsky Pëtr Il'ič: [PdB] 359(1);| [PdB1] 1388(1);[PdB2] 1503(1);</p>
+<p>Cunliffe Dick (musicista): [UrPj] 353(1);</p>
+<p>Dixieland (modo di suonare jazz dei “bianchi”): [Pj1] 540(1);</p>
+<p>Ellington Duke (musicista): [PdB2] 1437(1);</p>
+<p>Faith Percy: [UrPj] 61(1);</p>
+<p>Harry Lauder, Sir: [UrPj] 47(1);</p>
+<p>Khuntz Charlie: [Uqp] 1034(1); [Uqp3] 1946(1);</p>
+<p>Mascagni Pietro: [PJ]432(1); | [Pj1] 395(1);</p>
+<p>Otto Natalino (cantante): [PJ] 563(1);[AP] 1433(1);| [Pj1] 533(1);</p>
+<p>Tinoco José Federico: [UrPj] 51(1);</p>
+<p>Toscanini Arturo: [UrPj] 31(1);</p>
+
+<p class="titolo_indice">Canzoni, opere musicali:</p>
+<p>Arrivederci Jeeves: [PJ] 564(1);</p>
+<p>Bandiera Rossa: [PJ] 477(1); 482(1); 485(1); 527(1);| [Pj1] 446(1); 449(1); 493(1); 494(1);</p>
+<p>Belle bimbe brune (canzone d’amore): [Fra] 1704(1); | [Im] 1009(1);</p>
+<p>Covering the Waterfront: [PJ] 441(1);[Uqp] 1034(1);| [Uqp3] 1946(1);[Pj1] 403(1);</p>
+<p>Deep Purple (canzone): [Uqp] 1027(1); | [Pj1] 867(1); [Uqp2] 1829(1);	[Uqp3] 1839(1); 1946(1);</p>
+<p>Fiorin Fiorello (canzone): [Im] 868(1);</p>
+<p>Fratelli d'Italia: [Im] 882(1);| [Fra] 1587(1);</p>
+<p>Inno al Piave: [PdB1] 1378(1);</p>
+<p>Inno di Mameli: [PJ] 468(1); | [Pj1] 431(1);</p>
+<p>It’s a long way to Tipperary: [PdB1] 1326(1);[PdB2] 1447(1);</p>
+<p>Long ago and far away: [PJ] 495(1); | [PdB1] 1312(1);</p>
+<p>Lungo il Viale (Natalino Otto): [PJ] 563(1);| [Pj1] 533(1);</p>
+<p>Marsigliese: [PdB1] 1283(1);</p>
+<p>Nerone (Mascagni): [PJ] 432(1);| [Pj1] 395(1);</p>
+<p>Over the Rainbow: [Im] 923(1);[Uqp] 1032(1); 1034(4); 1035(2); 1045(1); 1091(1);| [Pj1] 867(1);[Uqp2] 1828(1); 1829(3); [Uqp3] 1944(1); 1946(4); 1947(2); 2008(1);</p>
+<p>Polvere di stelle (Star dust): [PdB1] 1288(1); 1312(1);</p>
+<p>Rhapsody in Blue: [Im] 922(1);</p>
+<p>Solitude (canzone): [Uqp2] 1829(1);</p>
+<p>Sopra l’arcobaleno (Somewhere over the raimbow): [PdB1] 1288(1);</p>
+<p>Sul Ponte di Berati (canzone ufficiale del reggimento di Nord, versione alpini di Pietà l’è morta): [Im] 1008(1);| [Fra] 1703(1);</p>
+<p>There'll always be an England: [Fra] 1639(1);</p>
+<p>Tristezze (Chopin): [PJ] 564(1);| [Pj1] 534(1);</p>
+<p>Where and When (canzone): [Uqp2] 1829(1);</p>
+
+<p class="titolo_indice">Aziende:</p>
+<p>Aprilia (moto): [AP] 1429(1);</p>
+<p>Balilla (auto): [PdB] 305(1); | [UrPj] 147(1); [Fra] 1617(1);</p>
+<p>Burberry (casa di moda inglese): [Pj1] 634(1);</p>
+<p>Campari: [PdB1] 1274(1);</p>
+<p>Cinzano: [PdB] 323(1);</p>
+<p>Cinzano: [PdB1] 1357(1);[PdB2] 1466(1);[Uqp1] 1723(1); 1724(1);</p>
+<p>Citroen D.S.: [Ar] 1378(1);[14-oldlion]</p>
+<p>Fiat: [VA] 46(1);[4-Raul] [PdB] 343(1);[PJ] 565(2);[Ar] 1240(3);[4-esattore] | [PdB1] 1261(1); 1376(1);[PdB2] 1486(1);[Pj1] 535(2);</p>
+<p>Guzzi (moto): [Im] 897(1);</p>
+<p>Helmerick (medicina contro la Scabbia): [Pj1] 818(1);[Pj2] 1136(1);</p>
+<p>London Dry (caramelle): [UrPj] 23(1);</p>
+<p>Miroglio (catena di negozi?): [PdB1] 1314(3);</p>
+<p>Moscato: [UrPj] 191(1);</p>
+<p>Pears (sapone): [Pj1] 570(1);</p>
+<p>Peugeot: [GF] 209(1); [1-giorno]</p>
+<p>Società Elettrica: [VA] 95(1);[7-Ettore]</p>
+
+<p class="titolo_indice">Radio, tv e case editrici:</p>
+<p>Albatross (edizioni): [PdB1] 1276(1);</p>
+<p>EIAR (Ente Italiano per le Audizioni Radiofoniche): [PdB] 380(1); | [PdB1] 1278(1); 1409(1);</p>
+<p>Radio Londra: [VA] 51(1);[4-Raul] [PdB] 404(1); 405(1);[PJ] 472(1); 473(1); 576(1); 577(1); 786(1); 787(1);[AP] 1444(1); 1447(1); 1460(2); 1461(2);[Im] 900(1); 901(1); 1002(1); 1003(1);[Uqp] 1043(1);| [PdB1] 1552(1);[PdB2] 1552(1);[Pj1] 436(1); 549(1); [Pj2] 1122(1);[Uqp1] 1796(1);[UrPj] 137(1); 159(1); 243(1);</p>
+<p>Radio Roma: [PJ] 430(1); 431(1); | [Pj1] 393(1);</p>
+<p>Radio Torino: [VA] 10(2); 11(2); 12(1); 13(1);[1-ventitré] [PJ] 675(1);| [Pj1] 664(1);[Pj2] 1004(1);</p>
+<p>Tauchnitz (edizioni): [PdB1] 1276(1);</p>
+
+<p class="titolo_indice">Fascismo:</p>
+<p>Appelius Mario (giornalista e telecronista del regime, corrispondente estero): [PdB1] 1274(1); 1276(4);</p>
+<p>Asse: [PdB] 359(1); | [PdB1] 1316(1);[PdB2] 1503(1);</p>
+<p>Battaglione San Marco (squadra speciale fascista): [PJ] [AP] [Uqp]| [Pj1] [Pj2] [Uqp1] [Uqp2] [Uqp3] </p>
+<p>Bergonzoli (Annibale, generale): [PdB1] 1338(1);</p>
+<p>Brigata/e nera/e: [UrPj] 113(1); [Pj1] 434(1);[Uqp1] 1776(1);[Uqp2] 1892(1); [Uqp3] 1990(1);</p>
+<p>Calvi Carlo: (conte) [PdB2] 1529(1);</p>
+<p>Camice Nere: [PdB1] 1261(1); 1284(1);</p>
+<p>Capelli Ather (gerarca/giornalista fascista): [UrPj] 127(1); 147(1);</p>
+<p>Capello Luigi: [Pen] 1170(1);[Ar] 1278(1);[15-licenza] (generale); </p>
+<p>De Bono Emilio (quadrumviro dei fascismo e maresciallo d'Italia.): [PdB] 330(1);| [PdB1] 1363(1);[PdB2] 1473(1);</p>
+<p>Divisione Emme (Battaglione Mussolini): [PdB] 351(1); 352(2); 354(1); 355(1); | [PdB1] 1379(1); 1380(1); 1381(2); 1383(1); 1384(1);[PdB2] 1492(1); 1495(1); 1496(2); 1498(1); 1499(1);</p>
+<p>Divisione Emmenthal (storpiatura della divisione Emme): [PdB] 354(1);| [PdB1] 1382(1); [PdB2] 1497(1);</p>
+<p>Divisione Littorio: [Pj1] 597(1);</p>
+<p>Duce: [PdB] 332(2); 333(2); 342(1); 343(1); [PJ] 436(1); 437(1); 592(1); 593(1);[Im] 894(1); 895(1); 910(1); 911(1); 912(2); 913(2);[Uqp] 1080(4); 1081(4); 1124(1); 1125(1); 1134(1); 1135(1);[AP] 1453(1);[Ar] 1322(1);[9-premilitari] [Ep] 94(1);| [PdB1] 1260(1); 1261(2); 1283(2); 1326(1); 1365(2); 1376(1);[PdB2] 1475(1); 1476(1); 1486(1); [UrPj] 221(3);[Pj1] 398(1); 566(1); 626(1);[Pj2] 955(1); 1094(1);[Fra] 1601(1); 1620(4);[Uqp1] 1781(4);[Uqp2] 1897(1); 1898(3);[Uqp3] 1996(4); 1997(4); 2043(1); 2056(1);</p>
+<p>Farinacci Roberto: [Fra] 1625(1);</p>
+<p>Franco Francisco (generale): [PdB1] 1261(1); 1267(1); 1268(1); 1315(1); 1318(1); 1220(2);</p>
+<p>GIL (Gioventù Italiana del Littorio.): [PdB1] 1332(2);</p>
+<p>Gioventù Italiana del Littorio (GIL): [PdB] 292(1);| [PdB1] 1330(1);[PdB2] 1432(1);</p>
+<p>Graziani Rodolfo: [PdB] 394(1);[PJ] 429(1);[Im] 916(1);[Uqp] 1125(1);| [PdB1] 1266(2); 1267(1);[Pj1] 392(1); 398(1); 412(1); 426(1); 449(1); 463(1); 566(1); [Uqp1] 1811(1);</p>
+<p>Guardia Nazionale Repubblicana: [Im] 1017(1);| [Fra] 1713(1);</p>
+<p>GUF (gruppo universitari fascisti): [PdB1] 1263(1);</p>
+<p>Littorio (brigata nera): [Uqp] 1078(1);</p>
+<p>Ministero della Guerra: [PdB1] 1409(1);</p>
+<p>Mussolini Benito: [VA] 62(1);[5-Blister] [PdB] 320(1); 330(1); 344(1); 345(1); 349(1); 351(1); 353(1);[PJ] 431(1); 603(1); 656(1); [Im] 885(1); 889(1); 913(1); 914(1); 934(1); 998(1); 1020(1);[Ar]1318(1);[7-podesta]; [Ar] 1341(1);[11-padrone] | [PdB1] 1262(1); 1296(1); 1308(1); 1355(1); 1363(1); 1377(1); 1382(1);[PdB2] 1464(1); 1473(1); 1487(1); 1494(1); 1496(1); [UrPj] 209(1); 221(2); 235(1);[Pj1] 393(1); 578(1); 624(1);[Pj2] 984(1);[Fra] 1591(1); 1595(1); 1622(1); 1623(1); 1625(1); 1693(1); 1716(1);[Uqp1] 1754(1); 1769(1);</p>
+<p>Muti Ettore (divisione dell’esercito di Graziani): [PJ] 435(1);[AP] 1440(1);[Im] 940(4); 1014(1);[Ar] 1347(4);[13-Golia]; [Ar]1371(1); [12-scambio] | [Pj1] 398(1);[Fra] 1644(2); 1645(2); 1710(1);</p>
+<p>NUF (Nuclei Universitari Fascisti): [PdB1] 1263(2); [Uqp1] 1794(1); 1795(1); 1812(1);</p>
+<p>PAOI: [PdB] 342(1);| [PdB2] 1486(1);</p>
+<p>Partito Fascista Repubblicano: [Pj1] 590(1);</p>
+<p>Pavolini Alessandro: [PJ] 431(1);[Im] 916(1); | [Pj1] 393(1);</p>
+<p>RAP (Raggruppamenti Anti Partigiani): [Im] 878(1); 879(1); [AP] 1426(1); 1427(1);|[Pj2] 1126(1); 1181(1); </p>
+<p>Repubblica (Sociale di Salò): [Uqp2] 1848(2); 1848(1); 1880(1);</p>
+<p>Starace Achille: [PdB1] 1326(1);</p>
+<p>Unione Militare: [PJ] 432(1); | [Pj1] 395(1);</p>
+<p>UNPA (Unione nazionale Protezione Antiaerea): [PdB] 342(1);[PJ] 465(1); 604(1);[Uqp] 1029(3); | [PdB1] 1259(1);1262(1); 1266(1); 1267(1); 1268(1); 1286(1); 1317(1); 1320(1);[Pj2] 947(1); [Uqp3] 1841(1);</p>
+<p>VU (Volontario Universitario): [PdB1] 1272(1);</p>
+
+<p class="titolo_indice">Nazismo:</p>
+<p>Adolfo (Hitler): [PdB] | [PdB1] 1308(1); 1380(1); </p>
+<p>Füher: [PdB] 332(1);[Ar] 1368(2);[13-Golia] | [PdB1] 1365(1);[PdB2] 1476(1);</p>
+<p>Goering Hermann (divisione panzer tedesca): [PJ] 434(1);| [Pj1] 396(1);</p>
+<p>Hitler Adolf: [Ar] 1354(1); 1359(1);[13-Golia] | [PdB2] 1488(1); 1489(1); 1495(1); 1502(1);[Pj2] 955(1);</p>
+<p>Kesselring Albert: [Im] 915(1);| [Fra] 1624(1);</p>
+<p>Langsdorf Hans (capitano tedesco): [PdB] 347(1);| [PdB1] 1310(1);</p>
+<p>Panzerdivision: [PdB] 380(1);| [PdB1] 1409(1);</p>
+<p>Rommel Erwin: [PdB] 406(2);[PJ] 498(1);| [PdB2] 1553(2);[Pj1] 463(1);</p>
+<p>S.P.E. (Special Operations Executive): [PJ] 570(1);</p>
+<p>Skorzeny Otto: [PJ] 436(1); | [Pj1] 393(1); 398(1);</p>
+<p>SS: [PJ] 676(1); 677(1);| [Pj1] 666(1);[Pj2] 1006(1);[Uqp1] 1733(2);</p>
+<p>Wehrmacht: [VA] 14(1);[1-ventitré] [Im] 915(1);| [Fra] 1624(1);[Pj1] 504(1);</p>
+
+<p class="titolo_indice">Partigiani: </p>
+<p>2a divisione badogliana: [Uqp3] 1990(1);</p>
+<p>A.P. (reggimento): [Im] 996(1);</p>
+<p>Azzurri badogliani: [Uqp3] 1971(1);</p>
+<p>Badogliani: [Uqp2] 1850(1); 1880(2);</p>
+<p>Brigata Belbo: [VA] 44(1);[4-Raul]</p>
+<p>Brigata C. (Brigata Canale): [PJ] 664(1); 672(2); 673(1); | [Pj2] 992(1); 1001(3);</p>
+<p>Brigata Canale: [Pj1] 649(1); 660(1);</p>
+<p>Brigata Garibaldi: [Im]  885(1);[PJ] 528(1); | [Fra] 1591(1);[Uqp1] 1769(1);[Uqp2] 1890(1);</p>
+<p>Brigata Matteotti: [PJ] 634(1);| [UrPj] 171(1); 339(1);[Pj2] 971(1);[Pj1] 612(1);</p>
+<p>Cacciatori degli Appennini: [AP] 1410(1);</p>
+<p>Cinque Giornate: [PJ] 432(1);</p>
+<p>CLN: [PJ] 623(1);[Ar] 1378(1); [14-oldlion] | [Pj1] 636(1);</p>
+<p>Comitato di Liberazione: [Im] 913(1);| [Pj1] 420(1); [Fra] 1622(1);[Uqp1] 1763(1);[Uqp2] 1883(1);</p>
+<p>Divisione Alpina Monterosa: [Pj1] 571(1);</p>
+<p>Divisione Militare Autonoma Langhe (I° e II°): [Pj1] 541(1); 607(1);</p>
+<p>Fazzoletti Azzurri (badogliani): [AP] 1412(1); 1417(1); 1423(1);</p>
+<p>Gielle (Giustizia e libertà): [Ar] 1370(1);[13-Golia]</p>
+<p>Giustizia e Libertà (GL): [UrPj] 225(1);</p>
+<p>GL (Giustizia e Libertà): [AP] 1459(1);[Im] 913(1);| [Fra] 1648(1); [UrPj] 225(1);</p>
+<p>I° Divisione Militare Autonoma Langhe: [PJ] 571(1);| [Pj2] 989(1);</p>
+<p>II° Divisione: [PJ] 571(1); | [Pj2] 957(1);</p>
+<p>II Reggimento Cacciatori degli Appennini: [VA] 8(1);[1-ventitré]</p>
+<p>Monterosa (divisione alpina): [PJ] 596(1);</p>
+<p>PP (partito popolare): [PJ] 547(1);</p>
+<p>PDA (partito D’Azione): [Ar] 1378(1);[14-oldlion]</p>
+<p>Polizia Segreta partigiana: [Pj1] 713(2);[Pj2] 1046(2);</p>
+<p>Quarta Armata: [Im] 882(1);</p>
+<p>Seconda divisione badogliana (Presidio di Mango): [Uqp1] 1776(1);</p>
+<p>Seconda Divisione Langhe: [VA] 42(1); [4-Raul]</p>
+<p>Stella Rossa: [PJ] 482(1); 577(1); 621(1); 622(1); 655(1); 665(1); 792(1); 856(1);[AP] 1412(1); [Im] 874(1); 878(1); 885(3); 888(1); 891(1); 904(2); 930(3); 935(2); 936(2); 974(1); 1003(1);[Uqp] 1057(1); 1073(1); 1077(1); 1089(1); 1094(1); 1103(1); 1104(2); 1105(1); 1125(2);[Ar] 1337(3); 1342(2); 1343(2);[11-padrone] | [UrPj] 27(3); 29(4); 45(1); 207(7); 257(1); 267(2); 299(1); 301(1); 303(1);[Pj2] 981(1); 994(1); 1196(1);[Fra] 1578(1); 1583(1); 1591(3); 1598(1); 1611(2); 1667(1); 1699(1);[Uqp1] 1746(1); 1769(1); 1778(2); 1786(2); 1815(1); 1818(1); 1820(1);[Uqp2] 1850(1); 1890(2); 1895(2); 1912(2); 1921(1); 1924(1); 1926(1);[Uqp3] 1971(1); 1988(1); 1993(1); 2005(1); 2011(1); 2021(1); 2022(2); 2023(1); 2044(1);</p>
+<p>VI Divisione Autonomi: [UrPj] 57(1); 63(1);</p>
+
+<p class="titolo_indice">Esercito Italiano: </p>
+<p>20° fanteria, divisione Livorno: [Uqp1] 1750(1);</p>
+<p>Alleati: [PJ] 489(1); 529(1); 578(1); 582(1); 596(1); 623(1); 657(1); 712(1); 722(1); 844(2);</p>
+<p>Badoglio Pietro: [VA] 48(2);[4-Raul] [PdB] 350(1); 357(1); 370(1); 371(1); 373(1); 381(1); 394(1); [PJ] 445(1); 593(1); 616(2); [AP] 1450(1); 1458(1); [Im] 871(1); | [PdB1] 1400(1); 1410(1);[PdB2] 1515(1); 1525(1); [Pj1]  407(1); 566(1); [Pj2] 955(1); [Fra] 1575(1);</p>
+<p>Cadorna Luigi: [Pen] 1182(1); [Ar] 1392(1); [15-licenza]</p>
+<p>Dicat (milizia volontaria di difesa nazionale): [PJ] 437(1);| [PdB1] 1260(1); 1261(1); 1284(1);[Pj1] 399(1);</p>
+<p>Esercito Regio: [UrPj] 171(1);</p>
+<p>Galliano Giuseppe (maggiore): [UrPj] 215(1);</p>
+<p>Guardia Nazionale: [Im] 1017(1);| [Uqp2] 1869(1);</p>
+<p>Quarta armata (distaccata in Francia): [PdB2] 1542(2);[Fra] 1587(1);</p>
+<p>Re: [Ar] 1232(1), 1233(1), 1236(1), 1237(1), 1258(1), 1259(1), [9-premilitari]; [Ar] 1334(1), 1335(1), 1392(1), 1393(1)[15-licenza] | [PdB1] 1264(2), 1268(1), 1272(1), 1277(1), 1278(1), 1279(1), 1283(1), 1288(1), 1302(1), 1321(2), 1326(1), 1332(1), 1337(1), 1338(2), 1339(1), 1345(1), 1348(1), 1350(1), 1351(1), 1352(3), 1353(1), 1354(1), 1358(1), 1359(1), 1361(1), 1365(1), 1368(1), 1376(1), 1377(2), 1378(2), 1380(1), 1382(2), 1384(1), 1391(1), 1394(1), 1395(1), 1406(1), 1410(1), 1413(1), 1421(1)</p>
+<p>Regio Esercito: [PdB] 314(1); 355(1);[PJ] 475(1);[AP] 1430(1);| [PdB2] 1457(1); 1499(1);[Pj1] 398(1); 439(1); 539(1); 642(1); 909(1);[Fra] 1625(1);</p>
+<p>S.P.E. (Special Operations Executive): [Pj1] 540(1);</p>
+<p>Sua Maestà: [Fra] 1639(1); [Pj1] 573(1);</p>
+<p>UNUCI (Unione Nazionale Ufficiali in Congedo d'Italia.): [Uqp2] 1876(1);</p>
+
+<p class="titolo_indice">Esercito alleato:</p>
+<p>Alexander Harold (generale): [PJ] 787(1); 788(1);[AP] 1424(1);| [Pj1] 800(2);[Pj2] 1122(1); 1123(1);</p>
+<p>Alleati: [Pj1] 454(1); 496(1); 497(1); 549(1); 554(1); 569(1); 600(1); 710(1); 722(1); 897(2); 914(1);</p>
+<p>Esercito Inglese: [UrPj] 93(1); 109(1);</p>
+<p>Helvetia felix: [Fra] 1628(1);</p>
+<p>Patton Smith George (generale statunitense): [UrPj] 245(1);</p>
+<p>RAF (Royal Air Force): [PJ] 623(1); [Im] 867(1);| [UrPj] 13(1);</p>
+<p>Razione K (razione da combattimento): [Pj1] 397(1);</p>
+<p>UNUCI (Unione Nazionale Ufficiali in Congedo d'Italia): [Uqp1] 1750(1);</p>
+<p>USAF (United States Air Force): [UrPj] 59(1);</p>
+
+<p class="titolo_indice">Elementi cristiani:</p>
+<p>Abramo: [Pj1] 623(1);</p>
+<p>Adamo: [Uqp2] 1905(1);</p>
+<p>Aquinate (San Tommaso): [c] [PjC10]</p>
+<p>Ascensione: [GF] 214(1);[1-giorno]</p>
+<p>Assunta: [Ar] 1258(1);[5-ferragosto]</p>
+<p>Ausiliatrice: [GF] 215(1);[1-giorno]</p>
+<p>Ave: [Pj1] 445(1); 475(1); 484(1); 502(1);</p>
+<p>Carnevale: [VA] 96(1);[7-Ettore]</p>
+<p>Christ: [Im] 926(2);| [Fra] 1636(2);</p>
+<p>Conservet Deus: [PdB] 317(1);</p>
+<p>Creatore: [PJ] 833(1);| [Pj1] 884(1);[Pj2] 1172(1);</p>
+<p>Cristo: [VA] 31(1); 39(1);[2-andata]; 48(1); 49(2);[4-Raul]; 67(2); 89(1);[5-Blister]; 113(1); 116(2);[10-lune]; 127(1); 128(1); [11-odore] [PdB] 379(1);[PJ] 686(1);[Pen] 1173(1);[AP] 1443(1); 1457(2); 1475(1);[Ar] 1206(1); 1228(1);[1-SanBenedetto]; [Ar] 1240(2); 1277(1);[4-esattore]; [Ar] 1315(1); 1358(1);[7-podesta] | [PdB1] 1408(1);[UrPj] 17(1); 119(1); [Pj1] 681(1); 871(2);[Pj2] 1016(1);</p>
+<p>Cuor di Gesù: [AP] 1424(3);</p>
+<p>Davide (Davide e Golia): [Pj1] 791(1);</p>
+<p>Demonio: [Pj1] 807(1); 871(1);</p>
+<p>Denkart (DĒNKART ("atti della religione"). - Testo pahlavico del sec. IX d. C.): [PdB1] 1366(1);[PdB2] 1476(1);</p>
+<p>Diavolo: [Fra] 1581(2); 1635(1);</p>
+<p>Dio: [VA] 12(1); 15(1); 31(1);[1-ventitré]; 39(1); 49(1);[4-Raul]; 59(1); 76(2);[6-Muro]; 98(1); 100(1);[7-Ettore] [GF] 227(1); 231(1); 238(1);[3-Paco]239(2); 253(2); 258(1);[4-Superino] [PJ] 462(1); 471(1); 490(1); 562(1); 602(1); 620(1); 628(1); 714(1); 730(1); 785(1); 793(1); 801(1); 812(1); 822(1); 827(1); 835(1); 843(1); 849(1); 859(1);[AP] 1415(1); 1436(1); 1439(2); 1441(1); 1443(1); 1457(1); 1461(2); 1484(1);[Im] 871(1); 872(1); 874(1); 875(1); 876(1); 879(2); 903(1); 911(1); 914(1); 924(1); 925(1); 937(1); 969(2); 970(1); 973(1); 980(1); 983(1); 1005(1);[Ar] 1262(1); 1281(1); 1284(1); 1293(1);[13-Golia];[Ar] 1326(1); 1329(1); 1358(2); 1372(2); 1382(1); 1397(1);[5-ferragosto] | [PdB1] 1262(1); 1295(1); 1298(1); 1303(1); 1311(1); 1318(1); 1332(1); 1340(1); 1365(1); 1383(1); 1403(1); 1406(1); 1408(1); 1418(1);[UrPj] 29(1); 57(1); 65(1); 71(1); 111(1); 129(1); 135(1); 159(2); 165(1); 177(1); 211(1); 217(1); 221(1); 277(1); 283(1); 305(1); 319(1); 361(1);[Pj1] 426(1); 435(1); 455(1); 532(1); 577(1); 596(1); 605(1); 712(1); 721(1); 729(1); 797(1); 808(1); 820(1); 824(2); 833(1); 843(1); 844(1); 866(1); 869(1); 872(1); 878(1); 887(1); 904(1); 914(1); [Pj2] 1045(1); 1062(1); 1120(1); 1128(1); 1138(1); 1150(1); 1160(1); 1166(1); 1174(1); 1190(1); 1197(1);</p>
+<p>Dio Cristo: [Ar] 1358(1); [13-Golia] | [Uqp1] 1725(1);</p>
+<p>Dio fascista (imprecazione): [Im] 879(1); 937(1); 1005(1); [Uqp] 1041(1); 1120(1);| [Fra] 1584(1); 1641(1);[Uqp2] 1834(1); [Uqp3] 1954(1); 2039(1); 2042(1);</p>
+<p>Dio santo: [Im] 879(1); 980(1);</p>
+<p>Dio sergente (imprecazione): [Uqp] 1068(2); | [Uqp2] 1861(2);[Uqp3] 1983(1); 1984(1);</p>
+<p>Divina Provvidenza: [Ar] 1341(1);[11-padrone]</p>
+<p>Doomsday (giorno del giudizio): [PJ] 456(1);| [Pj1] 419(1);</p>
+<p>Eden: [PJ] 767(1); 794(1); [Uqp] 1122(1); | [PdB1] 1283(2);[Pj1] 774(1);[Pj2] 1101(1); 1129(1);</p>
+<p>Gesù: [PdB1] 1355(1);</p>
+<p>Gesù Cristo: [Uqp] 1179(1);| [Uqp1] 1780(1);[Uqp3] 1995(1);</p>
+<p>Gesù Cristo Signore: [Fra] 1682(3);</p>
+<p>Giovanni (apostolo): [PJ] 598(1);| [Pj1] 573(1);</p>
+<p>Giuda: [GF] 257(1);[4-Superino]</p>
+<p>Golconda: [PJ] 581(2); | [Pj1] 552(2);</p>
+<p>Graal: [Pj1] 840(1);</p>
+<p>Isaia: [c] [PjC10]</p>
+<p>Jesus-Marie: [Ar] 1265(1); 1270(1);[5-ferragosto]</p>
+<p>Lucifero: [Ma] 172(1);[GF] 236(2); 241(1); [3-Paco]</p>
+<p>Madonna: [PJ] 731(1); 755(1); 756(1); 759(1); 833(1); [Im] 906(1); 935(2); 954(1);[Uqp] 1129(1);[Ar] 1307(1);[6-paese]; 1342(2);[Ar] [11-padrone] | [Pj1] 760(2); 883(1);[Pj2] 1063(1);[Fra] 1613(1);</p>
+<p>Madonna del Deserto: [Ma] 143(1);[GF] 224(1); 225(1);[2-bambina]</p>
+<p>Madonna Vergine: [Uqp1] 1722(2);</p>
+<p>Madre di Dio: [PJ] 822(1);| [Pj2] 1160(1);</p>
+<p>Padreterno: [PJ] 676(1);[Ar] 1285(2); 1286(1); [5-ferragosto]; [Ar] 1396(1); [15-licenza] | [Pj1] 666(1);[Uqp1] 1737(1); [Uqp3] 2000(1);</p>
+<p>Papa: [PdB] 332(1); 338(1); 342(4); 343(6); 409(1);| [PdB1] 1365(1); 1371(1); 1375(2); 1376(8);</p>
+<p>S. Gennaro: [PdB1] 1389(1);</p>
+<p>San Bartolomeo: [GF] 231(1);[3-Paco]</p>
+<p>San Biagio: [Ma] 165(1);</p>
+<p>San Gennaro: [PdB] 360(1);</p>
+<p>San Gerlando: [PdB] 398(1);| [PdB2] 1544(1);</p>
+<p>San Lorenzo: [Ar] 1218(1); 1225(1); 1335(1);[2-addio]</p>
+<p>San Martino (festa): [AP] 1438(1);</p>
+<p>Sant'Elena: [Ma] 148(1);</p>
+<p>Sant’Agostino: [c] [PjC10]</p>
+<p>Santa Rita da Cascia: [Uqp1] 1762(1);</p>
+<p>Santissimo Sacramento: [PdB] 318(1);</p>
+<p>Santo Dio: [Ar]  1326(1); 1372(2);[9-premilitari]</p>
+<p>Santo Stefano: [Ma] 184(1);</p>
+<p>Satana: [Pj1] 871(2);</p>
+<p>Signor Gesù Cristo: [Im] 911(1); 988(3);| [Fra] 1619(1); 1682(3);[Uqp2] 1897(1);</p>
+<p>Signore: [GF] 241(1);[1-giorno]; 245(2);[3-Paco]; 267(2);[5-pioggia]; [Ar] 1221(1); 1368(1); 1387(3);[3-gorgo] </p>
+<p>Supremo (Dio): [PJ] 636(1); [Im] 1021(1);[Ar] 1256(4); [5-ferragosto];1257(2); [6-paese]; 1258(3); 1309(1); 1312(1);[7-podesta] | [Pj1] 615(1); 850(1);[Fra] 1717(1);</p>
+<p>Vangelo di Giovanni: [PJ] 598(1);| [Pj1] 573(1);</p>
+
+<p class="titolo_indice">Mitologia:</p>
+<p>Ade (re degli inferi): [PJ] | [Pj1] 490(1); 765(1);</p>
+<p>Afrodite (dea dell'amore): [PdB1] 1284(1); </p>
+<p>Ananke (personificazione greca del destino): [UrPj] 277(1);</p>
+<p>Annona: [Ep] 84(1);</p>
+<p>Atlante: [Ep] 84(2);</p>
+<p>Briareo (figlio di Urano e Gea): [UrPj] 349(1);</p>
+<p>Giove (il re di tutti gli dei): [PJ] 545(1); | [PdB1] 1311(1);[PdB2] 1491(1);[Pj1] 513(1);[Pj2] 935(1);</p>
+<p>Lethes (il fiume dell'oblio della mitologia greca e romana.): [PJ] 634(1);| [Pj1] 613(1);[Pj2] 972(1);</p>
+<p>Mitridate: [Ep] 57(1);</p>
+<p>Morfeo: [Ep] 127(1);</p>
+<p>Nesso (Il Centauro Nesso): [PdB1] 1401(1);</p>
+<p>Parche: [Ep] 42(1);</p>
+<p>Sisifo: [PJ] 525(1);[Ar] 1361(1); [13-Golia] | [Pj1] 492(1);</p>
+<p>Thálatta! Thálatta! (Greek: Θάλαττα! θάλαττα! — "The Sea! The Sea!"): [PdB2] 1469(1);</p>
+
+    </div>
+    <hr />
+	
+    <div style="margin-left:auto; margin-right:auto; width:900px; font-family: Garamond; font-size: 12px; text-align:center">
+	Università per Stranieri di Perugia, Université de Lorraine.</br>
+	<b>Fenoglio e i suoi nomi. Un’onomastica quasi neorealistica.</b></br>
+	<b>Fenoglio et ses noms. Une onomastique presque néoréaliste.</b></br>
+	Tesi di dottorato di Giovanni Pietro Vitali</div>
+    
+    <div id="legend" class="legend">
+	<a href="#" class="close_button" onClick="document.getElementById('legend').style.display = 'none';"><img src="../Immagini/close-button.png" width="30" height="30"/></a>
+	
+	<p style="text-align: center"><b>Sigle per l’Edizione Einaudi</b></p>
+	<table class="legend_table">
+ <tr>
+  <td>
+  [VA]</br>
+  [VA] [1-ventitré]</br>
+  [VA] [2-andata]</br>
+  [VA] [3-trucco]</br>
+  [VA] [4-Raul]</br>
+  [VA] [5-Blister]</br>
+  [VA] [6-Muro]</br>
+  [VA] [7-Ettore]</br>
+  [VA] [8-antica]</br>
+  [VA] [9-acqua]</br>
+  [VA] [10-lune]</br>
+  [VA] [11-odore]</br>
+  [VA] [12-pioggia]</br>
+  </td>
+  <td>
+  I ventitré giorni della città di Alba</br>
+  1.I ventitré giorni della città di Alba</br>
+  2.L’andata</br>
+  3.Il trucco </br>
+  4.Gli inizi del partigiano Raul </br>
+  5.Vecchi Blister </br>
+  6.Un altro muro </br>
+  7.Ettore va al lavoro </br>
+  8.Quell’antica ragazza </br>
+  9.L’acqua verde </br>
+  10.Nove lune </br>
+  11.L’odore della morte </br>
+  12.Pioggia e la sposa</br>
+  </td>
+ </tr>
+ <tr>
+  <td>
+  [Ma]
+  </td>
+  <td>
+  La malora
+  </td>
+ </tr>
+ <tr>
+  <td>
+  [GF]</br>
+  [GF] [1-giorno]</br>
+  [GF] [2-bambina]</br>
+  [GF] [3-Paco]</br>
+  [GF] [4-Superino]</br>
+  [GF] [5-pioggia]</br>
+  [GF] [6-novella]</br>
+  </td>
+  <td>
+  Un giorno di fuoco (Racconti del parentado) </br>
+  1.Un giorno di fuoco </br>
+  2.La sposa bambina </br>
+  3.Ma il mio amore è Paco </br>
+  4.Superino</br>
+  5.Pioggia e la sposa </br>
+  6.La novella dell’apprendista esattore </br>
+  </td>
+ </tr>
+ <tr>
+  <td>
+  [PdB]
+  </td>
+  <td>
+  Primavera di bellezza
+  </td>
+ </tr>
+ <tr>
+  <td>
+  [PJ]
+  </td>
+  <td>
+  Il partigiano Johnny
+  </td>
+ </tr>
+ <tr>
+  <td>
+  [Im]
+  </td>
+  <td>
+  L’imboscata
+  </td>
+ </tr>
+ <tr>
+  <td>
+  [Uqp]
+  </td>
+  <td>
+  Una questione privata
+  </td>
+ </tr>
+ <tr>
+  <td>
+  [Pen]
+  </td>
+  <td>
+  I penultimi
+  </td>
+ </tr>
+ <tr>
+  <td>
+  [AR]</br>
+  [Ar] [1-SanBenedetto]</br>
+  [Ar] [2-addio]</br>
+  [Ar] [3-gorgo]</br>
+  [Ar] [4-esattore]</br>
+  [Ar] [5-ferragosto]</br>
+  [Ar] [6-paese]</br>
+  [Ar] [7-podesta]</br>
+  [Ar] [8-affare]</br>
+  [Ar] [9-premilitari]</br>
+  [Ar] [10-tradotta]</br>
+  [Ar] [11-padrone]</br>
+  [Ar] [12-scambio]</br>
+  [Ar] [13-Golia]</br>
+  [Ar] [14-oldlion]</br>
+  [Ar] [15-licenza]</br>
+  [Ar] [16-Boeri]</br>
+  </td>
+  <td>
+  Gli altri racconti </br>
+  1.Nella valle di San Benedetto </br>
+  2.L’addio</br>
+  3.Il gorgo</br>
+  4.L’esattore</br>
+  5.Ferragosto</br>
+  6.Il paese</br>
+  7.Signor Podestà</br>
+  8.L’affare dell’anima </br>
+  9.I premilitari</br>
+  10.Tradotta a Roma</br>
+  11.Il padrone paga male </br>
+  12.Lo scambio dei prigionieri </br>
+  13.Golia</br>
+  14.Ciao, old lion </br>
+  15.La licenza</br>
+  16.Il mortorio</br>
+  Boeri </br>
+  </td>
+ </tr>
+ <tr>
+  <td>
+  [AP]
+  </td>
+  <td>
+  Appunti partigiani 
+  </td>
+ </tr>
+ <tr>
+  <td>
+  [NT]
+  </td>
+  <td>
+  Novembre sulla collina di Treiso
+  </td>
+ </tr>
+ <tr>
+  <td>
+  [Ep]
+  </td>
+  <td>
+  Epigrammi
+  </td>
+ </tr>
+</table>
+
+<p style="text-align: center"><b>Sigle per l’Edizione critica</b></p>
+	<table class="legend_table">
+	<tr>
+  <td>
+  [UrPj]
+  </td>
+  <td>
+  Ur Partigiano Johnny
+  </td>
+ </tr>
+ <tr>
+  <td>
+  [Pj1]
+  </td>
+  <td>
+  Partigiano Johnny &#8211; Prima redazione
+  </td>
+ </tr>
+ <tr>
+  <td>
+  [Pj2]
+  </td>
+  <td>
+  Partigiano Johnny &#8211; Seconda redazione
+  </td>
+ </tr>
+ <tr>
+  <td>
+  [PjC10]
+  </td>
+  <td>
+  Partigiano Johnny &#8211; Cartella 10
+  </td>
+ </tr>
+ <tr>
+  <td>
+  [Fra]
+  </td>
+  <td>
+  Frammenti di romanzo
+  </td>
+ </tr>
+ <tr>
+  <td>
+  [PdB1]
+  </td>
+  <td>
+  Primavera di bellezza &#8211; Prima redazione
+  </td>
+ </tr>
+ <tr>
+  <td>
+  [PdB2]
+  </td>
+  <td>
+  Primavera di bellezza &#8211; Seconda redazione
+  </td>
+ </tr>
+ <tr>
+  <td>
+  [Uqp1]
+  </td>
+  <td>
+  Una questione privata &#8211; Prima redazione 
+  </td>
+ </tr>
+ <tr>
+  <td>
+  [Uqp2]
+  </td>
+  <td>
+  Una questione privata &#8211; Seconda redazione 
+  </td>
+ </tr>
+ <tr>
+  <td>
+  [Uqp3]
+  </td>
+  <td>
+  Una questione privata &#8211; Terza redazione 
+  </td>
+ </tr>
+ <tr>
+  <td>
+  [D]
+  </td>
+  <td>
+  Diario
+  </td>
+ </tr>
+ <tr>
+  <td>
+  [QB]
+  </td>
+  <td>
+  Quaderno Bonalumi
+  </td>
+ </tr>
+ <tr>
+  <td>
+  [RS]</br>
+  [RS] [1-Langa]</br>
+  [RS] [2-gorgo]</br>
+  [RS] [3-paese]</br>
+  [RS] [4-esattore]</br>
+  [RS] [5-affare]</br>
+  [RS] [6-tradotta] </br>
+  [RS] [7-scambio]</br>
+  [RS] [8-antica]</br>
+  [RS] [9-acqua] </br>
+  [RS] [10-acquaBis]</br>
+  [RS] [11-licenza]</br>
+  [RS] [12-Boeri]</br>
+  [RS] [13-penultimi]</br>
+  [RS] [14-Fenoglio]</br>
+  </td>
+  <td>
+  Racconti
+  sparsi editi e inediti</br>
+  1.Alla
+  Langa</br>
+  2.Il
+  gorgo</br>
+  3.Il
+  paese</br>
+  4.L’esattore</br>
+  5.L’affare
+  dell’anima</br>
+  6.Tradotta
+  a Roma</br>
+  7.Lo
+  scambio dei prigionieri</br>
+  8.Quell’antica
+  ragazza</br>
+  9.L’acqua
+  verde</br>
+  10.L’acqua
+  verde BIS</br>
+  11.La
+  licenza</br>
+  12.Il
+  mortorio Boeri</br>
+  13.I
+  penultimi</br>
+  14.Un
+  Fenoglio alla prima guerra mondiale</br>
+  </td>
+ </tr>
+ <tr>
+  <td>
+  [Let]
+  </td>
+  <td>
+  Lettere
+  </td>
+ </tr>
+</table>
+    </div>
+</body>
+</html>
